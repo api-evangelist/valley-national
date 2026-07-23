@@ -1,0 +1,78 @@
+aid: valley-national
+name: Valley National Bank
+review:
+  question: Does Valley National Bank expose a first-party public developer API, downloadable OpenAPI specs, or a documented FDX/1033 data-access surface?
+  answer: false
+  date: '2026-07-23'
+  reviewer: API Evangelist
+findings:
+  summary: |
+    Valley National Bank (principal subsidiary of Valley National Bancorp,
+    NASDAQ: VLY, ~$64B in assets, national bank charter, OCC-regulated) operates
+    no first-party public developer portal and publishes no public API products,
+    OpenAPI/Swagger specifications, SDKs, or Postman collections. Candidate
+    developer hostnames do not resolve (developer.valley.com, developers.valley.com,
+    api.valley.com all fail DNS/connection), and the corporate site returns 404
+    for /developers and /api. Consumer-permissioned account and transaction data
+    is available only through third-party open-finance aggregators: Finicity by
+    Mastercard is documented as a Valley connection, with general Plaid/Tink
+    connectivity also referenced by third-party trackers. No directly exposed
+    FDX-conformant data-access API is documented, and no published CFPB Section
+    1033 data-rights posture was found. This is an honest identity-only
+    (aggregator-only) profile — the correct, non-fabricated result for a US
+    regional bank with no public API program.
+  charter: 'National bank (OCC-chartered commercial bank); subsidiary of Valley National Bancorp (NASDAQ: VLY)'
+  developerPortal:
+    exists: false
+    probed:
+      - url: https://developer.valley.com
+        status: '000'
+        note: No DNS / connection failure
+      - url: https://developers.valley.com
+        status: '000'
+        note: No DNS / connection failure
+      - url: https://api.valley.com
+        status: '000'
+        note: No DNS / connection failure
+      - url: https://valley.com/developers
+        status: '404'
+      - url: https://valley.com/api
+        status: '404'
+      - url: https://valley.com
+        status: '200'
+        note: Corporate marketing site only; no developer or API section
+  openApiHarvested: false
+  specProvenance: none
+  authModel: none-documented
+  fdxParticipation:
+    documented: false
+    note: No directly exposed FDX-conformant first-party API documented; data sharing is aggregator-mediated.
+  section1033Posture:
+    documented: false
+    note: No published CFPB Section 1033 personal-financial-data-rights posture found at review time.
+  aggregatorAccess:
+    - name: Finicity (by Mastercard)
+      documented: true
+      note: Third-party coverage lists Valley National Bank consumer and business accounts reachable via Finicity aggregation.
+    - name: Plaid / Tink
+      documented: false
+      note: Referenced generically by open-banking trackers as possible connectivity; not confirmed on a Valley-owned page.
+  transports:
+    - protocol: REST
+      documented: false
+      note: No first-party REST API is documented.
+sources:
+  - url: https://valley.com
+    type: Website
+    note: Corporate marketing site (HTTP 200); no developer/API surface.
+  - url: https://www.openbankingtracker.com/provider/valley-national-bank/apis
+    type: Reference
+    note: States no developer resources, no API products, no SDKs, no Postman collections for Valley National Bank; access via aggregators.
+  - url: https://fintable.io/coverage/banks/United%20States/2185_valley-national-bank
+    type: Reference
+    note: Documents Valley National Bank data availability via Finicity aggregation.
+actions:
+  reason: |
+    No first-party public API exists to model. Recorded an honest
+    identity-only (aggregator-only) profile with verified corporate links.
+    No OpenAPI/AsyncAPI artifacts were authored because none are documented.
